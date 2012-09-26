@@ -8,9 +8,7 @@
 #PLATFORM = caanoo
 #PLATFORM = dingux
 
-ifndef PLATFORM
-	PLATFORM = linux_x86
-endif
+PLATFORM ?= linux_x86
 
 ### Dingoo/Dingux
 ifeq ($(PLATFORM), dingux)
