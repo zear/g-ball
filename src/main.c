@@ -3,11 +3,13 @@
 #include "logic.h"
 #include "SDLmain.h"
 #include "timer.h"
+#include "baseent.h"
 
 int main()
 {
 	quit = 0;
 
+	initEntities();
 	initSDL();
 
 	setGameState(STATE_MENU);

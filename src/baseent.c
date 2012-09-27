@@ -1,57 +1,88 @@
-#include "sprite.h"
 #include "baseent.h"
 #include "SDLmain.h"
+#include "input.h"
+#include "baseent.h"
 
-Entity createEntity(char *ent, void *args){
+#define MAX_ENTITIES 256
+
+__ENT *ENT_CLASSES[MAX_ENTITIES];
+
+
+/*
+ * Stub entity.
+ */
+void baseEnt_draw(Entity *this);
+void baseEnt_logic(Entity *this);
+Entity *baseEnt_super(char* args);
+
+Entity *createEntity(char *class, char *args){
+	Entity *ent = NULL;
+	int i;
+	for (i=0;i < MAX_ENTITIES;i++) {
+		if (!ENT_CLASSES[i]) break;
+		if (!strcmp(class, ENT_CLASSES[i]->class))
+		{
+			ent = ENT_CLASSES[i]->super(args);
+		}
+	}	
+	if (!ent)
+	{
+		printf("Could not create entity %s, class is non-existant.\n", class);
+		return NULL;
+	}
+	else
+	{
+		printf("Created entity %s\n", class);
+	}
 	
+	return ent;
 }
 
-__ENT *ENT_CLASSES[256];
-
 int __DECLARE_ENTITY(char *class, void *super){
-	int i;
-	while (ENT_CLASSES[i] == NULL)
-		i++;
+	int i = 0;
+	printf("%%p, %p\n", ENT_CLASSES[i]);
+	for (i=0; i<MAX_ENTITIES; i++) {
+		if (!ENT_CLASSES[i]) break;
+	}
+	
+	if (ENT_CLASSES[i])
+	{
+		printf("Could not create entity class %s.\n", class);
+		return 0;
+	}
 	
 	ENT_CLASSES[i] = malloc(sizeof(__ENT));
 	ENT_CLASSES[i]->class = class;
 	ENT_CLASSES[i]->super = super;
+	
+	printf("Created class %s at %i.\n", class, i);
+	
+	return 1;
 }
 
-//STUB ENTITY
+void initEntities(){
+	int i;
+	for (i=0;i<MAX_ENTITIES;i++) {
+		ENT_CLASSES[i] = NULL;
+	}
+	
+	__DECLARE_ENTITY("ent_base", baseEnt_super);
+}
+//Example Entity
 
 void baseEnt_draw(Entity *this){
-	SDL_Rect rct = {
-		.h = 100,
-		.w = 100,
-		.x = this->x >> 16,
-		.y = this->y >> 16,
-	};
-	SDL_FillRect(screen, &rct, 0xFFFFFFFF);
+	this->x--; //Supress warnings.
 }
 
 void baseEnt_logic(Entity *this){
-	//DO NOTHING;
+	this->x++; //Supress warnings.
 }
 
-Entity *baseEnt_super(void *args) {
+Entity *baseEnt_super(char* args) {
 	Entity *this = malloc(sizeof(Entity));
 	
 	this->draw = baseEnt_draw;
 	this->logic = baseEnt_logic;
 	
-	this->x = 100 << 16;
-	this->y = 100 << 16;
-	
 	return this;
-}
-
-//TODO: Move the following to another file
-
-void initEntities(){
-	int i;
-	for (i=0;i<256;i++) {
-		ENT_CLASSES[i] = NULL;
-	}
-	__DECLARE_ENTITY("ent_base", baseEnt_super);
 }

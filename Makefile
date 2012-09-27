@@ -9,6 +9,7 @@
 #PLATFORM = dingux
 
 PLATFORM ?= linux_x86
+DEBUG = 1
 
 ### Dingoo/Dingux
 ifeq ($(PLATFORM), dingux)

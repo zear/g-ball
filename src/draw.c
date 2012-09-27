@@ -1,16 +1,9 @@
 #include "draw.h"
 #include "logic.h"
 #include "SDLgfx.h"
-#include "baseent.h"
-
-Entity *ent = NULL;
 
 void drawMenu()
 {
-	if (!ent)
-		ent = baseEnt_super(NULL);
-	
-	ent->draw(ent);
 }
 
 void drawInGame()
