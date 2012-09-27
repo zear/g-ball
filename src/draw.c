@@ -8,7 +8,7 @@ Entity *ent = NULL;
 void drawMenu()
 {
 	if (!ent)
-		ent = baseent_super(NULL);
+		ent = baseEnt_super(NULL);
 	
 	ent->draw(ent);
 }

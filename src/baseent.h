@@ -4,12 +4,12 @@
 #include "tile.h"
 
 typedef struct {
-	char *class;
+	char *class; //This is the class of our entity.
 	
-	void (*logic)(void *this);
-	void (*draw)(void *this);
+	void (*logic)(void *this); //pointer to function void camelCase_logic(Entity *this)
+	void (*draw)(void *this);  //pointer to function void camelCase_draw(Entity *this)
 	
-	int x,y; // >> 16
+	int x,y; // >> 16 .. Our x/y positions in fp16,16.
 	
 	Tile tile;
 } Entity;
