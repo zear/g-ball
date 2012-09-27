@@ -1,4 +1,4 @@
-#include "tile.h"
+#include "sprite.h"
 #include "baseent.h"
 #include "SDLmain.h"
 

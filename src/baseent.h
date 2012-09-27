@@ -1,7 +1,7 @@
 #ifndef __BASE_ENT__
 #define __BASE_ENT__
 
-#include "tile.h"
+#include "sprite.h"
 
 typedef struct {
 	char *class; //This is the class of our entity.
