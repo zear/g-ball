@@ -11,7 +11,7 @@ typedef struct {
 	
 	int x,y; // >> 16 .. Our x/y positions in fp16,16.
 	
-	Tile tile;
+	Sprite sprite;
 } Entity;
 
 typedef struct {

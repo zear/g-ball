@@ -5,17 +5,18 @@
 
 typedef struct {
 	SDL_Surface *tileset;
+	char w, h;
 	char *file;
 	void *next;
-} Tileset;
+} SpriteSheet;
 
 extern Tileset *tile;
 
 typedef struct {
 	Tileset *tileset;
 	uint8_t x,y;
-} Tile;
+} Sprite;
 
-Tile allocTile(char *ent);
+SpriteSheet spriteSheet_super(char *ent);
 
 #endif //__TILE__
