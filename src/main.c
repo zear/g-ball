@@ -13,7 +13,7 @@ int main()
 	initSDL();
 
 	setGameState(STATE_MENU);
-
+	
 	while(!quit)
 	{
 		if(calculateFrameRate())
