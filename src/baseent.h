@@ -14,6 +14,13 @@ typedef struct {
 	Tile tile;
 } Entity;
 
-Entity createEntity(char *ent);
+typedef struct {
+	char *class;
+	
+	void (*super)(Entity *this, void *args);
+} __ENT;
+
+int __DECLARE_ENTITY(char *class, void *super);
+Entity createEntity(char *class, void *args);
 
 #endif //__BASE_ENT__

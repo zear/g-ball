@@ -8,9 +8,7 @@
 #PLATFORM = caanoo
 #PLATFORM = dingux
 
-ifndef PLATFORM
-	PLATFORM = linux_x86
-endif
+PLATFORM ?= linux_x86
 
 ### Dingoo/Dingux
 ifeq ($(PLATFORM), dingux)
@@ -106,7 +104,14 @@ ifdef DUMA
 	LIB += -lduma
 endif
 
-SRC = src/main.c src/draw.c src/input.c src/logic.c src/SDLmain.c src/SDLgfx.c src/timer.c
+SRC = 	src/main.c	\
+	src/draw.c  	\
+	src/input.c 	\
+	src/logic.c 	\
+	src/SDLmain.c 	\
+	src/SDLgfx.c 	\
+	src/timer.c	\
+	src/baseent.c	
 OBJ = $(SRC:.c=.o)
 EXE = ball.bin
 

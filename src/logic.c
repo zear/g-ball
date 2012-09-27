@@ -1,9 +1,12 @@
 #include "logic.h"
 #include "SDLmain.h"
+#include "baseent.h"
 
 enum GameStateType GameState = STATE_MENU;
 enum GameStateType NewGameState;
 int quit;
+
+Entity *ents[256];
 
 void setGameState(enum GameStateType NewState)
 {
