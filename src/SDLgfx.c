@@ -1,6 +1,33 @@
 #include "SDLgfx.h"
+#include "font.h"
 #include "SDLmain.h"
 #include <SDL.h>
+
+void drawText(char *text, int x, int y, Font *Font)
+{
+	int c; // current character
+	int posX = x;
+	int posY = y;
+
+	for(c = 0; text[c] != '\0'; c++)
+	{
+		if(text[c] == '\n')
+		{
+			y++;
+			posY += Font->height;
+		}
+		else
+		{
+			applySurface(Font->bitmap, screen, posX, posY, &Font->clip[(int)text[c]]);
+			posX += Font->width;
+		}
+	}
+}
+
+void drawBackground(int r, int g, int b)
+{
+	SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, r, g, b));
+}
 
 SDL_Surface *loadImage(char *fileName)
 {

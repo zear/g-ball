@@ -4,6 +4,7 @@
 enum GameStateType
 {
 	STATE_EXIT = 0,
+	STATE_INIT,
 	STATE_MENU,
 	STATE_INGAME
 };
@@ -12,6 +13,7 @@ extern enum GameStateType NewGameState;
 
 void setGameState(enum GameStateType newState);
 void changeGameState();
+void logicInit();
 void logicMenu();
 void logicInGame();
 void clean();

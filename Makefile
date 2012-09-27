@@ -106,13 +106,14 @@ ifdef DUMA
 endif
 
 SRC = 	src/main.c	\
+	src/baseent.c	\
 	src/draw.c  	\
+	src/font.c	\
 	src/input.c 	\
 	src/logic.c 	\
 	src/SDLmain.c 	\
 	src/SDLgfx.c 	\
-	src/timer.c	\
-	src/baseent.c	
+	src/timer.c
 OBJ = $(SRC:.c=.o)
 EXE = ball.bin
 
