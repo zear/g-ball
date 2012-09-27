@@ -4,7 +4,7 @@
 #include "SDL.h"
 
 typedef struct {
-	SDL_Surface *tileset;
+	SDL_Surface *surface;
 	char w, h;
 	char *file;
 	void *next;
@@ -13,7 +13,7 @@ typedef struct {
 extern Tileset *tile;
 
 typedef struct {
-	Tileset *tileset;
+	SpriteSheet *spritesheet;
 	uint8_t x,y;
 } Sprite;
 
