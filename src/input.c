@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include "logic.h"
 
+_Bool keystate[256];
+
 SDL_Event event;
 
 void input()
@@ -10,6 +12,10 @@ void input()
 	{
 		switch(event.type)
 		{
+			case SDL_KEYDOWN:
+			case SDL_KEYUP:
+				keystate[event.key.keysym.sym] = (event.type == SDL_KEYDOWN);
+				break;
 			case SDL_QUIT:
 				setGameState(STATE_EXIT);
 				break;
