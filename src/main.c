@@ -12,8 +12,8 @@ int main()
 	initEntities();
 	initSDL();
 
-	setGameState(STATE_MENU);
-	
+	setGameState(STATE_INIT);
+
 	while(!quit)
 	{
 		if(calculateFrameRate())

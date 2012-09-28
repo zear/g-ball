@@ -31,7 +31,6 @@ int calculateFrameRate()
 			frameRate = 60;
 		}
 #endif
-		printf("FPS: %d\n", frameRate); // temporary
 		accumulator -= frameTime;
 		sleep = 0;
 	}
