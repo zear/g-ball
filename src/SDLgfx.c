@@ -3,6 +3,64 @@
 #include "SDLmain.h"
 #include <SDL.h>
 
+typedef struct {
+	SDL_Surface *surface;
+	char *fileName;
+	
+	void *next;
+} __SURFACE;
+
+__SURFACE *firstSurface;
+
+SDL_Surface *__loadImage(char *fileName)
+{
+	SDL_Surface *loadedImage = NULL;
+	SDL_Surface *optimizedImage = NULL;
+	
+	if(fileName == NULL)
+	{
+		fprintf(stderr, "ERROR (loadImage): File name not specified!\n");
+		return NULL;
+	}
+	
+	loadedImage = SDL_LoadBMP(fileName);
+	
+	if(loadedImage == NULL)
+	{
+		fprintf(stderr, "ERROR (loadImage): Failed to load image file: %s\n", fileName);
+		return NULL;
+	}
+	else
+	{
+		optimizedImage = SDL_DisplayFormat(loadedImage);
+		SDL_FreeSurface(loadedImage);
+	}
+	
+	if(optimizedImage == NULL)
+	{
+		fprintf(stderr, "ERROR (loadImage): Failed to optimize image file: %s\n", fileName);
+		return NULL;
+	}
+	else
+	{
+		// set transparency to magenta
+		Uint32 colorKey = SDL_MapRGB(optimizedImage->format, 255, 0, 255);
+		SDL_SetColorKey(optimizedImage, SDL_SRCCOLORKEY, colorKey);
+	}
+	
+	return optimizedImage;
+}
+
+__SURFACE *allocSurface(char *fileName) {
+	__SURFACE *surf = malloc(sizeof(__SURFACE));
+	
+	surf = malloc(sizeof(__SURFACE));
+	surf->surface = __loadImage(fileName);
+	surf->fileName = fileName;
+	
+	return surf;
+}
+
 void drawText(char *text, int x, int y, Font *Font)
 {
 	int c; // current character
@@ -29,43 +87,38 @@ void drawBackground(int r, int g, int b)
 	SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, r, g, b));
 }
 
-SDL_Surface *loadImage(char *fileName)
-{
-	SDL_Surface *loadedImage = NULL;
-	SDL_Surface *optimizedImage = NULL;
-
-	if(fileName == NULL)
-	{
-		fprintf(stderr, "ERROR (loadImage): File name not specified!\n");
-		return NULL;
+SDL_Surface *loadImage(char *fileName) {
+	__SURFACE *surf = firstSurface;
+	__SURFACE *prev;
+	if (!surf) {
+		firstSurface = allocSurface(fileName);
+		
+		return firstSurface->surface;
 	}
-
-	loadedImage = SDL_LoadBMP(fileName);
-
-	if(loadedImage == NULL)
-	{
-		fprintf(stderr, "ERROR (loadImage): Failed to load image file: %s\n", fileName);
-		return NULL;
+	
+	while(surf) {
+		if (!strcmp(surf->fileName, fileName))
+			break;
+		
+		prev = surf;
+		surf = surf->next;
 	}
-	else
+	
+	if (!surf)
 	{
-		optimizedImage = SDL_DisplayFormat(loadedImage);
-		SDL_FreeSurface(loadedImage);
-	}
-
-	if(optimizedImage == NULL)
-	{
-		fprintf(stderr, "ERROR (loadImage): Failed to optimize image file: %s\n", fileName);
-		return NULL;
+		surf = allocSurface(fileName);
+		prev->next = surf;
+		
+		return surf->surface;
 	}
 	else
 	{
-		// set transparency to magenta
-		Uint32 colorKey = SDL_MapRGB(optimizedImage->format, 255, 0, 255);
-		SDL_SetColorKey(optimizedImage, SDL_SRCCOLORKEY, colorKey);
+		if (!surf->surface)
+			printf("File registered, but no surface loaded (missing file %s?).\n", fileName);
+		
+		return surf->surface;
 	}
-
-	return optimizedImage;
+		
 }
 
 void clipImage(SDL_Rect *source, int tileWidth, int tileHeight, int rows, int numOfTiles)

@@ -40,7 +40,6 @@ Entity *createEntity(char *class, char *args){
 
 int __DECLARE_ENTITY(char *class, void *super){
 	int i = 0;
-	printf("%%p, %p\n", ENT_CLASSES[i]);
 	for (i=0; i<MAX_ENTITIES; i++) {
 		if (!ENT_CLASSES[i]) break;
 	}
@@ -54,8 +53,6 @@ int __DECLARE_ENTITY(char *class, void *super){
 	ENT_CLASSES[i] = malloc(sizeof(__ENT));
 	ENT_CLASSES[i]->class = class;
 	ENT_CLASSES[i]->super = super;
-	
-	printf("Created class %s at %i.\n", class, i);
 	
 	return 1;
 }
