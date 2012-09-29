@@ -1,5 +1,6 @@
 #include "fileio.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "SDLgfx.h"
 #include "game/map.h"
 
