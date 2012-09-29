@@ -108,22 +108,29 @@ int loadMap(char *fileName)
 
 		if(!strcmp(words[0], "TITLE:"))
 		{
-			wordsSize = 0;
-
-			for(i = 1; i < n; i++)
+			if(n < 1)
 			{
-				wordsSize += strlen(words[i]) + 1;
+				fprintf(stderr, "WARNING (loadMap): No level title specified!\n");
 			}
-
-			CurMap.title = malloc(wordsSize);
-
-			strcpy(CurMap.title, "");
-			for(i = 1; i < n; i++)
+			else
 			{
-				strcat(CurMap.title, words[i]);
-				if(i < n - 1)
+				wordsSize = 0;
+
+				for(i = 1; i < n; i++)
 				{
-					strcat(CurMap.title, " ");
+					wordsSize += strlen(words[i]) + 1;
+				}
+
+				CurMap.title = malloc(wordsSize);
+
+				strcpy(CurMap.title, "");
+				for(i = 1; i < n; i++)
+				{
+					strcat(CurMap.title, words[i]);
+					if(i < n - 1)
+					{
+						strcat(CurMap.title, " ");
+					}
 				}
 			}
 		}
