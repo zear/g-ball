@@ -160,6 +160,8 @@ int loadMap(char *fileName)
 			}
 			free(bitmapFileName);
 
+			clipImage(CurMap.clip, TILE_SIZE, TILE_SIZE, 16, 256);
+
 		}
 		if(!strcmp(words[0], "MAP:"))
 		{

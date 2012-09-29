@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
+#define TILE_SIZE	12
+
 typedef struct MapStruct
 {
 	char *title;
@@ -10,6 +12,7 @@ typedef struct MapStruct
 	int h;
 	int **array;
 	SDL_Surface *bitmap;
+	SDL_Rect clip[256];
 } Map;
 
 extern Map CurMap;
