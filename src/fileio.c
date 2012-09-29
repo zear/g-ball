@@ -91,6 +91,7 @@ int loadMap(char *fileName)
 	int n;
 	int i;
 	int j;
+	int wordsSize;
 
 	ifp = fopen(fileName, "r");
 	if(ifp == NULL)
@@ -105,14 +106,14 @@ int loadMap(char *fileName)
 
 		if(!strcmp(words[0], "TITLE:"))
 		{
-			int titleSize = 0;
+			wordsSize = 0;
 
 			for(i = 1; i < n; i++)
 			{
-				titleSize += strlen(words[i]) + 1;
+				wordsSize += strlen(words[i]) + 1;
 			}
 
-			CurMap.title = malloc(titleSize);
+			CurMap.title = malloc(wordsSize);
 
 			strcpy(CurMap.title, "");
 			for(i = 1; i < n; i++)
@@ -123,6 +124,37 @@ int loadMap(char *fileName)
 					strcat(CurMap.title, " ");
 				}
 			}
+		}
+		if(!strcmp(words[0], "BITMAP:"))
+		{
+			char *bitmapFileName = NULL;
+
+			if(n < 1)
+			{
+				fprintf(stderr, "ERROR (loadMap): No bitmap filename specified!\n");
+				return 1;
+			}
+
+			wordsSize = strlen("./data/gfx/") + strlen(words[1]) + 1;
+
+			bitmapFileName = malloc(wordsSize);
+			if(bitmapFileName == NULL)
+			{
+				fprintf(stderr, "ERROR (loadMap): Insufficient memory!\n");
+				return 1;
+			}
+
+			strcpy(bitmapFileName, "./data/gfx/");
+			strcat(bitmapFileName, words[1]);
+
+			CurMap.bitmap = loadImage(bitmapFileName);
+			if(CurMap.bitmap == NULL)
+			{
+				fprintf(stderr, "ERROR (loadBitmap): Failed to load bitmap file: %s\n", bitmapFileName);
+				return 1;
+			}
+			free(bitmapFileName);
+
 		}
 		if(!strcmp(words[0], "MAP:"))
 		{
