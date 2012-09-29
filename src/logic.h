@@ -18,6 +18,9 @@ void logicMenu();
 void logicInGame();
 void clean();
 
+void unloadMenu();
+void unloadGame();
+
 extern int quit;
 
 #endif /* _LOGIC_H_ */

@@ -1,5 +1,6 @@
 #include "logic.h"
 #include "font.h"
+#include "input.h"
 #include "SDLmain.h"
 
 enum GameStateType GameState = STATE_INIT;
@@ -19,6 +20,7 @@ void changeGameState()
 		case STATE_MENU:
 			break;
 		case STATE_INGAME:
+			killEntities();
 			break;
 
 		default:
@@ -31,6 +33,7 @@ void changeGameState()
 		case STATE_MENU:
 			break;
 		case STATE_INGAME:
+			createEntity("ent_base", 0,0);
 			break;
 
 		default:
@@ -45,6 +48,7 @@ void logicInit()
 	// init all game assets that we keep through the entire run time
 	loadFont(&FontSmall, "./data/gfx/fontSmall.bmp", 5, 9);
 	loadFont(&FontLarge, "./data/gfx/fontLarge.bmp", 10, 18);
+
 	setGameState(STATE_MENU);
 }
 
@@ -56,10 +60,15 @@ void logicMenu()
 	{
 		setGameState(STATE_EXIT);
 	}
+	
+	if (keystate[SDLK_RETURN])
+		setGameState(STATE_INGAME);
 }
 
 void logicInGame()
 {
+	logicEntities();
+	
 	int leaving = 0;
 
 	if(leaving)
