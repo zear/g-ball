@@ -12,6 +12,9 @@ void drawMenu()
 
 void drawInGame()
 {
+	drawBackground(0, 0, 0);
+	
+	drawEntities();
 }
 
 void draw()

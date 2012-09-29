@@ -1,6 +1,8 @@
 #ifndef __BASE_ENT__
 #define __BASE_ENT__
 
+#include <stdarg.h>
+
 typedef struct {
 	char *class; //This is the class of our entity.
 	
@@ -17,7 +19,13 @@ typedef struct {
 } __ENT;
 
 int __DECLARE_ENTITY(char *class, void *super);
-Entity *createEntity(char *class, char *args);
 void initEntities();
+
+Entity *createEntity(char *class, ...);
+void killEntities();
+void drawEntities();
+void logicEntities();
+
+extern Entity *ents[512];
 
 #endif //__BASE_ENT__
