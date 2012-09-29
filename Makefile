@@ -107,6 +107,7 @@ endif
 SRC = 	src/main.c	\
 	src/baseent.c	\
 	src/draw.c  	\
+	src/fileio.c	\
 	src/font.c	\
 	src/input.c 	\
 	src/logic.c 	\

@@ -22,7 +22,7 @@ int loadFont(Font *Font, char *fileName, int width, int height)
 	Font->width = width;
 	Font->height = height;
 
-	clipImage(&Font->clip, Font->width, Font->height, 16, 256);
+	clipImage(Font->clip, Font->width, Font->height, 16, 256);
 
 	return 0;
 }
