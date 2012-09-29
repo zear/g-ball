@@ -1,7 +1,8 @@
 #include "SDLgfx.h"
+#include <SDL.h>
 #include "font.h"
 #include "SDLmain.h"
-#include <SDL.h>
+#include "game/map.h"
 
 typedef struct {
 	SDL_Surface *surface;
@@ -85,6 +86,23 @@ void drawText(char *text, int x, int y, Font *Font)
 void drawBackground(int r, int g, int b)
 {
 	SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, r, g, b));
+}
+
+void drawMap()
+{
+	int i;
+	int j;
+	int x;
+	int y;
+
+	// this should depend on camera implementation in the future
+	for(j = 0, y = 0; j < CurMap.h; j++, y+=TILE_SIZE)
+	{
+		for(i = 0, x = 0; i < CurMap.w; i++, x+=TILE_SIZE)
+		{
+			applySurface(CurMap.bitmap, screen, x, y, &CurMap.clip[CurMap.array[i][j]]);
+		}
+	}
 }
 
 SDL_Surface *loadImage(char *fileName) {

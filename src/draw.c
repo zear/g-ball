@@ -13,8 +13,8 @@ void drawMenu()
 
 void drawInGame()
 {
-	drawBackground(0, 0, 0);
-	
+	drawBackground(0, 0, 0);	
+	drawMap();
 	drawEntities();
 }
 

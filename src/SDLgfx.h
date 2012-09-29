@@ -6,6 +6,7 @@
 
 void drawText(char *text, int x, int y, Font *Font);
 void drawBackground(int r, int g, int b);
+void drawMap();
 SDL_Surface *loadImage(char *fileName);
 void clipImage(SDL_Rect *source, int tileWidth, int tileHeight, int rows, int numOfTiles);
 void applySurface(SDL_Surface *source, SDL_Surface *destination, int x, int y, SDL_Rect *clip);

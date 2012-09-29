@@ -61,13 +61,19 @@ void logicMenu()
 {
 	int leaving = 0;
 
+	if(keystate[SDLK_RETURN])
+	{
+		setGameState(STATE_INGAME);
+	}
+	else if(keystate[SDLK_ESCAPE])
+	{
+		leaving = 1;
+	}
+
 	if(leaving)
 	{
 		setGameState(STATE_EXIT);
 	}
-	
-	if (keystate[SDLK_RETURN])
-		setGameState(STATE_INGAME);
 }
 
 void logicInGame()
@@ -75,6 +81,11 @@ void logicInGame()
 	logicEntities();
 	
 	int leaving = 0;
+
+	if(keystate[SDLK_ESCAPE])
+	{
+		leaving = 1;
+	}
 
 	if(leaving)
 	{
