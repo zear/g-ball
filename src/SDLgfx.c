@@ -1,7 +1,9 @@
 #include "SDLgfx.h"
+#include <SDL.h>
+#include <stdlib.h>
 #include "font.h"
 #include "SDLmain.h"
-#include <SDL.h>
+#include "game/map.h"
 
 typedef struct {
 	SDL_Surface *surface;
@@ -54,8 +56,8 @@ SDL_Surface *__loadImage(char *fileName)
 __SURFACE *allocSurface(char *fileName) {
 	__SURFACE *surf = malloc(sizeof(__SURFACE));
 	
-	surf = malloc(sizeof(__SURFACE));
 	surf->surface = __loadImage(fileName);
+	surf->next = NULL;
 	surf->fileName = fileName;
 	
 	return surf;
@@ -87,6 +89,23 @@ void drawBackground(int r, int g, int b)
 	SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, r, g, b));
 }
 
+void drawMap()
+{
+	int i;
+	int j;
+	int x;
+	int y;
+
+	// this should depend on camera implementation in the future
+	for(j = 0, y = 0; j < CurMap.h; j++, y+=TILE_SIZE)
+	{
+		for(i = 0, x = 0; i < CurMap.w; i++, x+=TILE_SIZE)
+		{
+			applySurface(CurMap.bitmap, screen, x, y, &CurMap.clip[CurMap.array[i][j]]);
+		}
+	}
+}
+
 SDL_Surface *loadImage(char *fileName) {
 	__SURFACE *surf = firstSurface;
 	__SURFACE *prev;
@@ -98,26 +117,26 @@ SDL_Surface *loadImage(char *fileName) {
 	
 	while(surf) {
 		if (!strcmp(surf->fileName, fileName))
-			break;
-		
-		prev = surf;
-		surf = surf->next;
-	}
-	
-	if (!surf)
-	{
-		surf = allocSurface(fileName);
-		prev->next = surf;
-		
-		return surf->surface;
-	}
-	else
-	{
-		if (!surf->surface)
+		{
+			if (!surf->surface)
 			printf("File registered, but no surface loaded (missing file %s?).\n", fileName);
 		
-		return surf->surface;
+			return surf->surface;
+		}
+		
+		if (surf->next)
+		{
+			prev = surf;
+			surf = prev->next;
+		}
+		else
+			break;	
 	}
+
+	__SURFACE *new = allocSurface(fileName);
+	surf->next = new;
+		
+	return new->surface;
 		
 }
 

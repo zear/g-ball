@@ -7,10 +7,6 @@ Font FontLarge;
 
 int loadFont(Font *Font, char *fileName, int width, int height)
 {
-	int i;
-	int j;
-	int tile;
-
 	Font->bitmap = loadImage(fileName);
 
 	if(Font->bitmap == NULL)

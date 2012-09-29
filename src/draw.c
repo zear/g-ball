@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "baseent.h"
 #include "font.h"
 #include "logic.h"
 #include "SDLgfx.h"
@@ -12,8 +13,8 @@ void drawMenu()
 
 void drawInGame()
 {
-	drawBackground(0, 0, 0);
-	
+	drawBackground(0, 0, 0);	
+	drawMap();
 	drawEntities();
 }
 

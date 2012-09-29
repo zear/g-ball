@@ -1,5 +1,7 @@
 #include "baseent.h"
+#include <stdlib.h>
 #include "SDLmain.h"
+#include "SDLgfx.h"
 #include "input.h"
 #include "baseent.h"
 

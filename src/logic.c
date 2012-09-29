@@ -1,11 +1,15 @@
 #include "logic.h"
+#include "baseent.h"
+#include "fileio.h"
 #include "font.h"
 #include "input.h"
 #include "SDLmain.h"
+#include "game/map.h"
 
 enum GameStateType GameState = STATE_INIT;
 enum GameStateType NewGameState;
 int quit;
+Map CurMap;
 
 void setGameState(enum GameStateType NewState)
 {
@@ -33,6 +37,7 @@ void changeGameState()
 		case STATE_MENU:
 			break;
 		case STATE_INGAME:
+			loadMap("./data/maps/map01.map");
 			createEntity("ent_base", 0,0);
 			break;
 
@@ -56,13 +61,19 @@ void logicMenu()
 {
 	int leaving = 0;
 
+	if(keystate[SDLK_RETURN])
+	{
+		setGameState(STATE_INGAME);
+	}
+	else if(keystate[SDLK_ESCAPE])
+	{
+		leaving = 1;
+	}
+
 	if(leaving)
 	{
 		setGameState(STATE_EXIT);
 	}
-	
-	if (keystate[SDLK_RETURN])
-		setGameState(STATE_INGAME);
 }
 
 void logicInGame()
@@ -70,6 +81,11 @@ void logicInGame()
 	logicEntities();
 	
 	int leaving = 0;
+
+	if(keystate[SDLK_ESCAPE])
+	{
+		leaving = 1;
+	}
 
 	if(leaving)
 	{
