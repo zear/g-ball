@@ -1,5 +1,6 @@
 #include "fileio.h"
 #include <stdio.h>
+#include "game/map.h"
 
 // Reads one line from fp
 int fgetLine(FILE *fp, char line[], int max)
@@ -80,4 +81,83 @@ int getWords(char *line, char *words[], int maxwords)
 			return nwords;
 		}
 	}
+}
+
+int loadMap(char *fileName)
+{
+	FILE *ifp;
+	char line[MAX_LINE];
+	char *words[MAX_WORDS];
+	int n;
+	int i;
+	int j;
+
+	ifp = fopen(fileName, "r");
+	if(ifp == NULL)
+	{
+		fprintf(stderr, "ERROR (loadMap): Cannot open map file: %s\n", fileName);
+		return 1;
+	}
+
+	while(fgetLine(ifp, line, MAX_LINE) != EOF)
+	{
+		n = getWords(line, words, MAX_WORDS);
+
+		if(!strcmp(words[0], "TITLE:"))
+		{
+			int titleSize = 0;
+
+			for(i = 1; i < n; i++)
+			{
+				titleSize += strlen(words[i]) + 1;
+			}
+
+			CurMap.title = malloc(titleSize);
+
+			strcpy(CurMap.title, "");
+			for(i = 1; i < n; i++)
+			{
+				strcat(CurMap.title, words[i]);
+				if(i < n - 1)
+				{
+					strcat(CurMap.title, " ");
+				}
+			}
+		}
+		if(!strcmp(words[0], "MAP:"))
+		{
+			CurMap.w = atoi(words[1]);
+			CurMap.h = atoi(words[2]);
+
+			CurMap.array = malloc(CurMap.w * sizeof(int));
+			if(CurMap.array == NULL)
+			{
+				fprintf(stderr, "ERROR (loadMap): Insufficient memory!\n");
+				return 1;
+			}
+			for(i = 0; i < CurMap.w; i++)
+			{
+				CurMap.array[i] = malloc(CurMap.h * sizeof(int));
+				if(CurMap.array[i] == NULL)
+				{
+					fprintf(stderr, "ERROR (loadMap): Insufficient memory!\n");
+					return 1;
+				}
+			}
+			for(j = 0; j < CurMap.h; j++)
+			{
+				fgetLine(ifp, line, MAX_LINE);
+				getWords(line, words, MAX_WORDS);
+
+				for(i = 0; i < CurMap.w; i++)
+				{
+					CurMap.array[i][j] = atoi(words[i]);
+				}
+			}
+		}
+	}
+
+	fclose(ifp);
+
+	return 0;
 }

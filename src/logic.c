@@ -2,10 +2,12 @@
 #include "font.h"
 #include "input.h"
 #include "SDLmain.h"
+#include "game/map.h"
 
 enum GameStateType GameState = STATE_INIT;
 enum GameStateType NewGameState;
 int quit;
+Map CurMap;
 
 void setGameState(enum GameStateType NewState)
 {
@@ -33,6 +35,7 @@ void changeGameState()
 		case STATE_MENU:
 			break;
 		case STATE_INGAME:
+			loadMap("./data/maps/map01.map");
 			createEntity("ent_base", 0,0);
 			break;
 
