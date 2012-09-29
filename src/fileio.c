@@ -148,6 +148,7 @@ int loadMap(char *fileName)
 			strcat(bitmapFileName, words[1]);
 
 			CurMap.bitmap = loadImage(bitmapFileName);
+
 			if(CurMap.bitmap == NULL)
 			{
 				fprintf(stderr, "ERROR (loadBitmap): Failed to load bitmap file: %s\n", bitmapFileName);

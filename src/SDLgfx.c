@@ -54,8 +54,8 @@ SDL_Surface *__loadImage(char *fileName)
 __SURFACE *allocSurface(char *fileName) {
 	__SURFACE *surf = malloc(sizeof(__SURFACE));
 	
-	surf = malloc(sizeof(__SURFACE));
 	surf->surface = __loadImage(fileName);
+	surf->next = NULL;
 	surf->fileName = fileName;
 	
 	return surf;
@@ -98,26 +98,26 @@ SDL_Surface *loadImage(char *fileName) {
 	
 	while(surf) {
 		if (!strcmp(surf->fileName, fileName))
-			break;
-		
-		prev = surf;
-		surf = surf->next;
-	}
-	
-	if (!surf)
-	{
-		surf = allocSurface(fileName);
-		prev->next = surf;
-		
-		return surf->surface;
-	}
-	else
-	{
-		if (!surf->surface)
+		{
+			if (!surf->surface)
 			printf("File registered, but no surface loaded (missing file %s?).\n", fileName);
 		
-		return surf->surface;
+			return surf->surface;
+		}
+		
+		if (surf->next)
+		{
+			prev = surf;
+			surf = prev->next;
+		}
+		else
+			break;	
 	}
+
+	__SURFACE *new = allocSurface(fileName);
+	surf->next = new;
+		
+	return new->surface;
 		
 }
 
