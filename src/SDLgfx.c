@@ -1,5 +1,6 @@
 #include "SDLgfx.h"
 #include <SDL.h>
+#include <stdlib.h>
 #include "font.h"
 #include "SDLmain.h"
 #include "game/map.h"
