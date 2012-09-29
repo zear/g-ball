@@ -132,6 +132,7 @@ int loadMap(char *fileName)
 			if(n < 1)
 			{
 				fprintf(stderr, "ERROR (loadMap): No bitmap filename specified!\n");
+				fclose(ifp);
 				return 1;
 			}
 
@@ -141,6 +142,7 @@ int loadMap(char *fileName)
 			if(bitmapFileName == NULL)
 			{
 				fprintf(stderr, "ERROR (loadMap): Insufficient memory!\n");
+				fclose(ifp);
 				return 1;
 			}
 
@@ -152,6 +154,7 @@ int loadMap(char *fileName)
 			if(CurMap.bitmap == NULL)
 			{
 				fprintf(stderr, "ERROR (loadBitmap): Failed to load bitmap file: %s\n", bitmapFileName);
+				fclose(ifp);
 				return 1;
 			}
 			free(bitmapFileName);
@@ -166,6 +169,7 @@ int loadMap(char *fileName)
 			if(CurMap.array == NULL)
 			{
 				fprintf(stderr, "ERROR (loadMap): Insufficient memory!\n");
+				fclose(ifp);
 				return 1;
 			}
 			for(i = 0; i < CurMap.w; i++)
@@ -174,6 +178,7 @@ int loadMap(char *fileName)
 				if(CurMap.array[i] == NULL)
 				{
 					fprintf(stderr, "ERROR (loadMap): Insufficient memory!\n");
+					fclose(ifp);
 					return 1;
 				}
 			}
