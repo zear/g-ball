@@ -176,7 +176,8 @@ int loadMap(char *fileName)
 			CurMap.w = atoi(words[1]);
 			CurMap.h = atoi(words[2]);
 
-			CurMap.array = malloc(CurMap.w * sizeof(int));
+			CurMap.array = malloc(CurMap.w * sizeof(int*));
+
 			if(CurMap.array == NULL)
 			{
 				fprintf(stderr, "ERROR (loadMap): Insufficient memory!\n");
