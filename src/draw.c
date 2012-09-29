@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "baseent.h"
 #include "font.h"
 #include "logic.h"
 #include "SDLgfx.h"

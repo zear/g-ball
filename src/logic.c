@@ -1,4 +1,5 @@
 #include "logic.h"
+#include "baseent.h"
 #include "fileio.h"
 #include "font.h"
 #include "input.h"

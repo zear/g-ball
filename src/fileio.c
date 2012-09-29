@@ -1,5 +1,6 @@
 #include "fileio.h"
 #include <stdio.h>
+#include "SDLgfx.h"
 #include "game/map.h"
 
 // Reads one line from fp

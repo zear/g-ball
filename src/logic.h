@@ -16,6 +16,7 @@ void changeGameState();
 void logicInit();
 void logicMenu();
 void logicInGame();
+void logic();
 void clean();
 
 void unloadMenu();
