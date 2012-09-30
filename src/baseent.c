@@ -5,6 +5,15 @@
 #include "input.h"
 #include "baseent.h"
 
+/*
+ * Game-related entity includes.
+ * Remove these in order to code your game differently.
+ */
+
+#include "game/entplayer.h"
+
+/*~	~	~	~	~	~	~	*/
+
 #include "font.h"
 
 #define MAX_ENTITIES 512
@@ -114,6 +123,7 @@ void initEntities(){
 	}
 	
 	__DECLARE_ENTITY("ent_base", baseEnt_super);
+	__DECLARE_ENTITY("ent_player", playerEnt_super);
 }
 //Example Entity
 
