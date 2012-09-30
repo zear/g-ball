@@ -62,10 +62,12 @@ void logicMenu()
 
 	if(keystate[SDLK_RETURN])
 	{
+		keystate[SDLK_RETURN] = 0;
 		setGameState(STATE_INGAME);
 	}
 	else if(keystate[SDLK_ESCAPE])
 	{
+		keystate[SDLK_ESCAPE] = 0;
 		leaving = 1;
 	}
 
@@ -83,6 +85,7 @@ void logicInGame()
 
 	if(keystate[SDLK_ESCAPE])
 	{
+		keystate[SDLK_ESCAPE] = 0;
 		leaving = 1;
 	}
 

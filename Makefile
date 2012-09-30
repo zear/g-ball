@@ -130,4 +130,4 @@ endif
 	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
 clean:
-	rm -rf src/*.o src/sdl/*.o $(EXE)
+	rm -rf src/*.o src/game/*.o $(EXE)

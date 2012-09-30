@@ -12,6 +12,8 @@ int initSDL()
 		return 1;
 	}
 
+	SDL_JoystickOpen(0);
+
 	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
 	SDL_ShowCursor(SDL_DISABLE);
 

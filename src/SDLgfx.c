@@ -75,6 +75,7 @@ void drawText(char *text, int x, int y, Font *Font)
 		{
 			y++;
 			posY += Font->height;
+			posX = x;
 		}
 		else
 		{
