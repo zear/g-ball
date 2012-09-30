@@ -4,6 +4,7 @@
 #include <SDL.h>
 
 extern SDL_Surface *screen;
+extern SDL_Joystick *joy;
 
 int initSDL();
 void cleanSDL();

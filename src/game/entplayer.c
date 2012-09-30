@@ -3,6 +3,7 @@
 #include "entplayer.h"
 #include "../font.h"
 #include "../input.h"
+#include "../SDLmain.h"
 
 void playerEnt_draw(Player *this){
 	//this->x--; //Supress warnings.
@@ -11,8 +12,8 @@ void playerEnt_draw(Player *this){
 
 void playerEnt_logic(Player *this){
 	//this->x++; //Supress warnings.
-	this->x += Joystate.x;
-	this->y += Joystate.y;
+	this->x += SDL_JoystickGetAxis(joy, 0);
+	this->y += SDL_JoystickGetAxis(joy, 1);
 }
 
 Entity *playerEnt_super(char *args) {
