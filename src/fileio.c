@@ -253,7 +253,7 @@ int loadMap(char *fileName)
 			}
 		}
 		if(!strcmp(words[0], "ENTITY:")) {
-			if (n < 2) {
+			if (n < 3) {
 				printf("Malformed entity, no %s specified.\n", (n==1) ? "object name" : "arguments");
 				fclose(ifp);
 				return 1;
