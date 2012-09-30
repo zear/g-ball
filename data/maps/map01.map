@@ -12,4 +12,6 @@ MAP: 15 10
 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 ENTITY: player 100 100
-ENTITY: ent_base 100 100
+ENTITY: ent_base "150 150"
+ENTITY: ent_base "150 0"
+ENTITY: ent_base "0 0"

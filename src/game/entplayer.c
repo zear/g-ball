@@ -9,14 +9,18 @@ void playerEnt_logic(Player *this){
 	//this->x++; //Supress warnings.
 }
 
-Entity *playerEnt_super(va_list args) {
+Entity *playerEnt_super(char *args) {
 	Player *this = malloc(sizeof(Player));
 	
 	this->draw = playerEnt_draw;
 	this->logic = playerEnt_logic;
 	
-	this->x = va_arg(args, int) << 16;
-	this->y = va_arg(args, int) << 16;
+	sscanf(args, "%i %i", &this->x, &this->y);
+	
+	this->x = this->x << 16;
+	this->y = this->y << 16;
+	
+	this->collisionType = 1;
 	
 	return this;
 }

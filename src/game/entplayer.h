@@ -9,13 +9,15 @@ typedef struct {
 	void (*logic)(void *this); //pointer to function void camelCase_logic(Entity *this)
 	void (*draw)(void *this);  //pointer to function void camelCase_draw(Entity *this)
 	
+	int collisionType;
+	
 	int x,y; // >> 16 .. Our x/y positions in fp16,16.
 	int sx, sy;
 } Player;
 
 void playerEnt_draw(Player *this);
 void playerEnt_logic(Player *this);
-Entity *playerEnt_super(va_list args);
+Entity *playerEnt_super(char *args);
 
 #endif //__ENTITY_PLAYER__ 
 
