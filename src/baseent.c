@@ -127,7 +127,7 @@ void initEntities(){
 
 void baseEnt_draw(Entity *this){
 	//this->x--; //Supress warnings.
-	drawText("Test Entity", this->x >> 16, this->y >> 16, &FontLarge);
+	//drawText("Test Entity", this->x >> 16, this->y >> 16, &FontLarge);
 }
 
 void baseEnt_logic(Entity *this){

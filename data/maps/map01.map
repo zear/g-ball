@@ -14,3 +14,4 @@ MAP: 15 10
 ENTITY: ent_base "150 150"
 ENTITY: ent_base "150 0"
 ENTITY: ent_base "0 0"
+ENTITY: ent_player "0 0"

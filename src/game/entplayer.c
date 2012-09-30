@@ -1,14 +1,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "entplayer.h"
+#include "../font.h"
+#include "../input.h"
 
 void playerEnt_draw(Player *this){
 	//this->x--; //Supress warnings.
-	//drawText("Test Entity", this->x >> 16, this->y >> 16, &FontLarge);
+	drawText("@", this->x >> 16, this->y >> 16, &FontLarge);
 }
 
 void playerEnt_logic(Player *this){
 	//this->x++; //Supress warnings.
+	this->x += Joystate.x;
+	this->y += Joystate.y;
 }
 
 Entity *playerEnt_super(char *args) {
