@@ -56,11 +56,13 @@ int getWords(char *line, char *words[], int maxwords)
 	
 	int word = 0;
 	_Bool skip = 0;
-	_Bool keep = 1;
 	_Bool isQuote = 0; //word at, are we quoting?
 	
-	while(keep) {
+	while(1) {
 		switch(*c){
+			if (word == maxwords)
+				return word;
+			
 			case '"':
 			if (isQuote)
 			{		
@@ -119,7 +121,7 @@ int getWords(char *line, char *words[], int maxwords)
 				
 				words[word] = tmp;
 				word++;		
-				keep = 0;
+				return word;
 			default:
 				c++;
 				continue;
