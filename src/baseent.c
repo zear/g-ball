@@ -1,5 +1,6 @@
-#include "baseent.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "baseent.h"
 #include "SDLmain.h"
 #include "SDLgfx.h"
 #include "input.h"
@@ -136,8 +137,8 @@ void baseEnt_logic(Entity *this){
 Entity *baseEnt_super(char* args) {
 	Entity *this = malloc(sizeof(Entity));
 	
-	this->draw = baseEnt_draw;
-	this->logic = baseEnt_logic;
+	this->draw = (void *)baseEnt_draw;
+	this->logic = (void *)baseEnt_logic;
 	
 	sscanf(args, "%i %i", &this->x, &this->y);
 	

@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "entplayer.h"
 
 void playerEnt_draw(Player *this){
@@ -12,8 +14,8 @@ void playerEnt_logic(Player *this){
 Entity *playerEnt_super(char *args) {
 	Player *this = malloc(sizeof(Player));
 	
-	this->draw = playerEnt_draw;
-	this->logic = playerEnt_logic;
+	this->draw = (void*)playerEnt_draw;
+	this->logic = (void*)playerEnt_logic;
 	
 	sscanf(args, "%i %i", &this->x, &this->y);
 	
@@ -22,5 +24,5 @@ Entity *playerEnt_super(char *args) {
 	
 	this->collisionType = 1;
 	
-	return this;
+	return (Entity *)this;
 }
