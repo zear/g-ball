@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include "logic.h"
 
-_Bool keystate[256];
+_Bool keystate[2048];
 
 SDL_Event event;
 

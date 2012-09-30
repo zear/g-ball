@@ -38,7 +38,6 @@ void changeGameState()
 			break;
 		case STATE_INGAME:
 			loadMap("./data/maps/map01.map");
-			createEntity("ent_base", 0,0);
 			break;
 
 		default:

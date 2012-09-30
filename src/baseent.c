@@ -1,9 +1,19 @@
-#include "baseent.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "baseent.h"
 #include "SDLmain.h"
 #include "SDLgfx.h"
 #include "input.h"
 #include "baseent.h"
+
+/*
+ * Game-related entity includes.
+ * Remove these in order to code your game differently.
+ */
+
+#include "game/entplayer.h"
+
+/*~	~	~	~	~	~	~	*/
 
 #include "font.h"
 
@@ -18,7 +28,7 @@ Entity *ents[MAX_ENTITIES];
  */
 void baseEnt_draw(Entity *this);
 void baseEnt_logic(Entity *this);
-Entity *baseEnt_super(va_list args);
+Entity *baseEnt_super(char *args);
 
 int getLastEntityIndex() {
 	int i;
@@ -56,10 +66,7 @@ void killEntities(){
 	}
 }
 
-Entity *createEntity(char *class, ...){
-	va_list args;
-	va_start(args, class);
-	
+Entity *createEntity(char *class, char *args){
 	Entity *ent = NULL;
 	int i;
 	for (i=0;i < MAX_ENTITIES;i++) {
@@ -114,6 +121,7 @@ void initEntities(){
 	}
 	
 	__DECLARE_ENTITY("ent_base", baseEnt_super);
+	__DECLARE_ENTITY("ent_player", playerEnt_super);
 }
 //Example Entity
 
@@ -126,14 +134,18 @@ void baseEnt_logic(Entity *this){
 	//this->x++; //Supress warnings.
 }
 
-Entity *baseEnt_super(va_list args) {
+Entity *baseEnt_super(char* args) {
 	Entity *this = malloc(sizeof(Entity));
 	
-	this->draw = baseEnt_draw;
-	this->logic = baseEnt_logic;
+	this->draw = (void *)baseEnt_draw;
+	this->logic = (void *)baseEnt_logic;
 	
-	this->x = va_arg(args, int) << 16;
-	this->y = va_arg(args, int) << 16;
+	sscanf(args, "%i %i", &this->x, &this->y);
+	
+	this->x = this->x << 16;
+	this->y = this->y << 16;
+	
+	this->collisionType = 0;
 	
 	return this;
 }

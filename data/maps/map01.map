@@ -1,5 +1,5 @@
-TITLE: A cool level
-BITMAP: tileset.bmp
+TITLE: "A cool level"
+BITMAP: "tileset.bmp"
 MAP: 15 10
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 2 1 2 1 1 1 1 1 0 1 1 1 1 0 2
@@ -11,3 +11,6 @@ MAP: 15 10
 2 1 1 2 2 2 2 2 1 0 0 2 1 1 2
 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ENTITY: ent_base "150 150"
+ENTITY: ent_base "150 0"
+ENTITY: ent_base "0 0"

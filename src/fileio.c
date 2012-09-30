@@ -47,42 +47,89 @@ int fgetLine(FILE *fp, char line[], int max)
 }
 
 //breaks a line into words
+//I don't even know how the hell this shit even works, it just did.
+
 int getWords(char *line, char *words[], int maxwords)
 {
-	char *p = line;
-	int nwords = 0;
+	char *s = line, *c = line; //start, cursor
+	char *tmp; //Temporary string;
+	
+	int word = 0;
+	_Bool skip = 0;
+	_Bool isQuote = 0; //word at, are we quoting?
+	
+	while(1) {
+		switch(*c){
+			if (word == maxwords)
+				return word;
+			
+			case '"':
+			if (isQuote)
+			{		
+				tmp = malloc(sizeof(char) * (c-s+1));
+				strncpy(tmp, s, c-s);
+				tmp[c-s] = '\0';
 
-	while(1)
-	{
-		while(isspace(*p))
-		{
-			p++;
-		}
+				words[word] = tmp;
+				word++;
+				
+				isQuote = 0;
+				skip = 1;
+				
+				c++;
+				if (*c=='\0')
+					return word;
+				
+				c++;
+				s=c;
+			}
+			else
+			{
+				isQuote = 1;
+				
+				c++;
+				s = c;
+			}
+			break;
+			case ' ':
+			if (!skip)
+			{
+				if (isQuote) 
+				{
+					c++;
+				}
+				else
+				{
+					tmp = malloc(sizeof(char) * (c-s));
+					
+					strncpy(tmp, s, c-s);
+					tmp[c-s] = '\0';
 
-		if(*p == '\0')
-		{
-			return nwords;
-		}
-
-		words[nwords++] = p;
-
-		while(!isspace(*p) && *p != '\0')
-		{
-			p++;
-		}
-
-		if(*p == '\0')
-		{
-			return nwords;
-		}
-
-		*p++ = '\0';
-
-		if(nwords >= maxwords)
-		{
-			return nwords;
+					words[word] = tmp;
+					word++;
+					
+					c++;
+					s = c;
+				}
+			}
+			else
+				skip = 0;
+			break;
+			case '\0':
+				tmp = malloc(sizeof(char) * strlen(s));
+				strcpy(tmp, s);
+				
+				words[word] = tmp;
+				word++;		
+				return word;
+			default:
+				c++;
+				continue;
+				break;				
 		}
 	}
+	
+	return word;
 }
 
 int loadMap(char *fileName)
@@ -204,6 +251,15 @@ int loadMap(char *fileName)
 					CurMap.array[i][j] = atoi(words[i]);
 				}
 			}
+		}
+		if(!strcmp(words[0], "ENTITY:")) {
+			if (n < 3) {
+				printf("Malformed entity, no %s specified.\n", (n==1) ? "object name" : "arguments");
+				fclose(ifp);
+				return 1;
+			}
+			
+			createEntity(words[1], words[2]);
 		}
 	}
 

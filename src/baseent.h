@@ -9,6 +9,8 @@ typedef struct {
 	void (*logic)(void *this); //pointer to function void camelCase_logic(Entity *this)
 	void (*draw)(void *this);  //pointer to function void camelCase_draw(Entity *this)
 	
+	int collisionType;
+	
 	int x,y; // >> 16 .. Our x/y positions in fp16,16.
 } Entity;
 
@@ -21,7 +23,7 @@ typedef struct {
 int __DECLARE_ENTITY(char *class, void *super);
 void initEntities();
 
-Entity *createEntity(char *class, ...);
+Entity *createEntity(char *class, char *args);
 void killEntities();
 void drawEntities();
 void logicEntities();
