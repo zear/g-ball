@@ -60,35 +60,35 @@ void collisionAdjacents(Player *this, int i, int j)
 	int c;
 	float fix[4];
 	
-	getAdjacent(i_, j_, &a);
+	getAdjacent(i_, j_, a);
 	
 	if (a[0]) {
-		c = circleLineIntersect((float)i_*TILE_SIZE, (float)j_*TILE_SIZE, (float)(i_*TILE_SIZE) + TILE_SIZE, (float)j_*TILE_SIZE, this->x, this->y, 6.f, &fix);
+		c = circleLineIntersect((float)i_*TILE_SIZE, (float)j_*TILE_SIZE, (float)(i_*TILE_SIZE) + TILE_SIZE, (float)j_*TILE_SIZE, this->x, this->y, 6.f, fix);
 		if (c == 2)
-			applyForceTwoPoints(this, &fix);
+			applyForceTwoPoints(this, fix);
 	}
 	
 	if (a[1]) {
-		c = circleLineIntersect((float)(i_*TILE_SIZE) + TILE_SIZE, (float)j_*TILE_SIZE, (float)(i_*TILE_SIZE) + TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, this->x, this->y, 6.f, &fix);
+		c = circleLineIntersect((float)(i_*TILE_SIZE) + TILE_SIZE, (float)j_*TILE_SIZE, (float)(i_*TILE_SIZE) + TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, this->x, this->y, 6.f, fix);
 		if (c == 2)
-			applyForceTwoPoints(this, &fix);
+			applyForceTwoPoints(this, fix);
 	}
 	
 	if (a[2]) {
-		c = circleLineIntersect((float)i_*TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, (float)(i_*TILE_SIZE) + TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, this->x, this->y, 6.f, &fix);
+		c = circleLineIntersect((float)i_*TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, (float)(i_*TILE_SIZE) + TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, this->x, this->y, 6.f, fix);
 		if (c == 2)
-			applyForceTwoPoints(this, &fix);
+			applyForceTwoPoints(this, fix);
 	}
 	
 	if (a[3]) {
-		c = circleLineIntersect((float)i_*TILE_SIZE, (float)j_*TILE_SIZE, (float)i_*TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, this->x, this->y, 6.f, &fix);
+		c = circleLineIntersect((float)i_*TILE_SIZE, (float)j_*TILE_SIZE, (float)i_*TILE_SIZE, (float)(j_*TILE_SIZE) + TILE_SIZE, this->x, this->y, 6.f, fix);
 		if (c == 2)
-			applyForceTwoPoints(this, &fix);
+			applyForceTwoPoints(this, fix);
 	}
 }
 
 void playerCollision(Player *this) {
-	int i_, j_, a[4];
+	int i_, j_;
 	i_ = this->x / TILE_SIZE;
 	j_ = this->y / TILE_SIZE;
 	

@@ -27,7 +27,7 @@ void playerEnt_draw(Player *this){
 	int i_, j_, a[4];
 	i_ = this->x / TILE_SIZE;
 	j_ = this->y / TILE_SIZE;
-	getAdjacent(i_, j_, &a);
+	getAdjacent(i_, j_, a);
 
 	if (a[0])
 		lineRGBA(screen, i_*TILE_SIZE, j_*TILE_SIZE, (i_*TILE_SIZE) + TILE_SIZE, j_*TILE_SIZE, 255, 255, 255, 255);
