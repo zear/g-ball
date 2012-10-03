@@ -21,8 +21,8 @@ void drawInGame()
 	drawMap();
 	drawEntities();
 
-	sprintf(joyInfo, "x:%d\ny:%d\n", SDL_JoystickGetAxis(joy, 0), SDL_JoystickGetAxis(joy, 1));
-	drawText(joyInfo, 250, 200, &FontSmall);
+	//sprintf(joyInfo, "x:%d\ny:%d\n", SDL_JoystickGetAxis(joy, 0), SDL_JoystickGetAxis(joy, 1));
+	//drawText(joyInfo, 250, 200, &FontSmall);
 }
 
 void draw()

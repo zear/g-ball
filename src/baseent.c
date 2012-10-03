@@ -140,10 +140,7 @@ Entity *baseEnt_super(char* args) {
 	this->draw = (void *)baseEnt_draw;
 	this->logic = (void *)baseEnt_logic;
 	
-	sscanf(args, "%i %i", &this->x, &this->y);
-	
-	this->x = this->x << 16;
-	this->y = this->y << 16;
+	sscanf(args, "%f %f", &this->x, &this->y);
 	
 	this->collisionType = 0;
 	

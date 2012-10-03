@@ -5,6 +5,6 @@
 #define SCREEN_HEIGHT	240
 #define SCREEN_BPP	32
 
-#define FPS		60
+#define FPS		(1000/FPS_MACRO)
 
 #endif /* _GLOBAL_H_ */

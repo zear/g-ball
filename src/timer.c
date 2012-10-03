@@ -3,14 +3,38 @@
 #include "global.h"
 
 int frameRate = 0;
+int deltaTime = 1;
+int oDeltaTime= 1;
+float frameScale = 0.f;
+static int currentTime = 0; //SDL_GetTicks();
+
+void doFrame() {
+	int newTime;
+	
+	oDeltaTime = deltaTime;
+	newTime = SDL_GetTicks();
+	deltaTime = newTime - currentTime;
+	deltaTime *= oDeltaTime;
+	
+	deltaTime = sqrt(deltaTime);
+	
+	currentTime = newTime;
+	
+	frameScale = (float)deltaTime/1000;
+	
+#if defined(NO_FPS_LIMIT)
+	SDL_Delay(1); //Don't go faster than the speed of light, please.
+#else
+	if (deltaTime < FPS)
+		SDL_Delay(FPS - deltaTime);
+#endif
+}
 
 int calculateFrameRate()
 {
-	static int currentTime = 0; //SDL_GetTicks();
 	static double accumulator = 0;
 	static double frameTime = 1000.0/(double)FPS;
 	int newTime;
-	int deltaTime;
 	int sleep = 1;
 
 	newTime = SDL_GetTicks();
@@ -35,5 +59,7 @@ int calculateFrameRate()
 		sleep = 0;
 	}
 
+	frameScale = (float)deltaTime/1000;
+	
 	return sleep;
 }

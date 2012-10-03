@@ -16,11 +16,7 @@ int main()
 
 	while(!quit)
 	{
-		if(calculateFrameRate())
-		{
-			SDL_Delay(1);
-		}
-		else
+		doFrame();
 		{
 			input();
 			logic();

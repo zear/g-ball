@@ -11,7 +11,7 @@ typedef struct {
 	
 	int collisionType;
 	
-	int x,y; // >> 16 .. Our x/y positions in fp16,16.
+	float x,y; // >> 16 .. Our x/y positions in fp16,16.
 } Entity;
 
 typedef struct {

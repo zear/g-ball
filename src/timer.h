@@ -4,5 +4,7 @@
 int calculateFrameRate();
 
 extern int frameRate;
+extern int deltaTime;
+extern float frameScale;
 
 #endif /* _TIMER_H_ */

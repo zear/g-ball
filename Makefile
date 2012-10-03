@@ -8,6 +8,7 @@
 #PLATFORM = caanoo
 #PLATFORM = dingux
 
+FPS_MACRO ?= 60
 PLATFORM ?= linux_x86
 
 ### Dingoo/Dingux
@@ -15,7 +16,8 @@ ifeq ($(PLATFORM), dingux)
 	CC = mipsel-linux-gcc
 	STRIP = mipsel-linux-strip
 	CFLAGS = -mips32 -mtune=mips32 -G0 -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision-constant -mbranch-likely -DHAVE_SOUND -DHAVE_MUSIC -DWITH_LOADING_SCREEN -DPLATFORM_DINGOO -DIS_HANDHELD -DWITH_HWSURFACE
-	LIB = -lSDL_mixer -lSDL -lm -lpthread
+	INCLUDE = -I/opt/opendingux-toolchain/usr/include/SDL
+	LIB = -lSDL_mixer -lSDL -lm -lpthread -lSDL_gfx
 endif
 
 ### GP2X/Wiz
@@ -51,7 +53,7 @@ ifeq ($(PLATFORM), linux_x86)
 	STRIP = strip
 	CFLAGS = -DHAVE_SOUND -DHAVE_MUSIC -DHAVE_JOYSTICK -DHAVE_MOUSE -DWITH_CUSTOM_LEVELS -DWITH_HWSURFACE #-DHAVE_TOUCHSCREEN
 	INCLUDE = -I/usr/include/ -I/usr/include/SDL
-	LIB = -lSDL_mixer -lSDL -lm -lpthread
+	LIB = -lSDL_mixer -lSDL -lSDL_gfx -lm -lpthread
 endif
 
 ### win32
@@ -87,7 +89,7 @@ endif
 SVNREV = -DVERSION_REVISION="$(shell svnversion -n -c . | cut -s -d: -f2 | tr -d MS)" # calculates the svn revision number
 
 ifdef DEBUG
-	CFLAGS += -Wextra -Wall -ggdb3 -c -O0 $(SVNREV)
+	CFLAGS += -Wextra -Wall -ggdb3 -c -O2 $(SVNREV)
 else
 	CFLAGS += -c -O2 $(SVNREV)
 endif
@@ -104,16 +106,21 @@ ifdef DUMA
 	LIB += -lduma
 endif
 
-SRC = 	src/main.c	\
-	src/baseent.c	\
-	src/draw.c  	\
-	src/fileio.c	\
-	src/font.c	\
-	src/input.c 	\
-	src/logic.c 	\
-	src/SDLmain.c 	\
-	src/SDLgfx.c 	\
-	src/timer.c	\
+CFLAGS += -DFPS_MACRO=$(FPS_MACRO)
+	
+
+SRC = 	src/int/intersect.c	\
+	src/int/physics.c	\
+	src/main.c		\
+	src/baseent.c		\
+	src/draw.c  		\
+	src/fileio.c		\
+	src/font.c		\
+	src/input.c 		\
+	src/logic.c 		\
+	src/SDLmain.c 		\
+	src/SDLgfx.c 		\
+	src/timer.c		\
 	src/game/entplayer.c
 OBJ = $(SRC:.c=.o)
 EXE = ball.bin
@@ -130,4 +137,4 @@ endif
 	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
 clean:
-	rm -rf src/*.o src/game/*.o $(EXE)
+	rm -rf src/*.o src/game/*.o src/int/*.o $(EXE)

@@ -11,8 +11,11 @@ typedef struct {
 	
 	int collisionType;
 	
-	int x,y; // >> 16 .. Our x/y positions in fp16,16.
-	int sx, sy;
+	float x,y; // >> 16 .. Our x/y positions in fp16,16.
+	float sx, sy, ax, ay;
+	
+	float mass;
+	float elasticity;
 } Player;
 
 void playerEnt_draw(Player *this);
