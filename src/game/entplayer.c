@@ -15,20 +15,25 @@ typedef struct {
 	void *next;
 } vert;
 
-void playerEnt_draw(Player *this){
-	//this->x--; //Supress warnings.
-
-	//drawText("@", (int)this->x, (int)this->y, &FontLarge);
-	ellipseRGBA(screen,
-			(int)this->x, (int)this->y,
-			5, 5,
-			255, 255, 255, 200);
-	
-	int i_, j_, a[4];
+void drawAdjacents(Player *this){
+	int i_, j_;
 	i_ = this->x / TILE_SIZE;
 	j_ = this->y / TILE_SIZE;
-	getAdjacent(i_, j_, a);
+	
+	drawAdjacent(i_, j_);
+	drawAdjacent(i_, j_-1);
+	drawAdjacent(i_+1, j_);
+	drawAdjacent(i_, j_+1);
+	drawAdjacent(i_-1, j_);
+}
 
+void drawAdjacent(int i, int j)
+{
+	int i_, j_, a[4];
+	i_ = i;
+	j_ = j;
+	getAdjacent(i_, j_, a);
+	
 	if (a[0])
 		lineRGBA(screen, i_*TILE_SIZE, j_*TILE_SIZE, (i_*TILE_SIZE) + TILE_SIZE, j_*TILE_SIZE, 255, 255, 255, 255);
 	
@@ -40,6 +45,18 @@ void playerEnt_draw(Player *this){
 	
 	if (a[3])
 		lineRGBA(screen, i_*TILE_SIZE, j_*TILE_SIZE, i_*TILE_SIZE, (j_*TILE_SIZE) + TILE_SIZE, 255, 255, 255, 255);
+}
+
+void playerEnt_draw(Player *this){
+	//this->x--; //Supress warnings.
+
+	//drawText("@", (int)this->x, (int)this->y, &FontLarge);
+	ellipseRGBA(screen,
+			(int)this->x, (int)this->y,
+			5, 5,
+			255, 255, 255, 200);
+	
+	drawAdjacents(this);
 }
 
 void playerEnt_logic(Player *this){
