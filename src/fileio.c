@@ -120,7 +120,7 @@ int getWords(char *line, char *words[], int maxwords)
 				strcpy(tmp, s);
 				
 				words[word] = tmp;
-				word++;		
+				word++;
 				return word;
 			default:
 				c++;

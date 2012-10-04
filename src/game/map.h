@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-#define TILE_SIZE	12
+#define TILE_SIZE	16
 
 typedef struct MapStruct
 {
