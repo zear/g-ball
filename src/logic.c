@@ -3,6 +3,7 @@
 #include "fileio.h"
 #include "font.h"
 #include "input.h"
+#include "menu.h"
 #include "SDLmain.h"
 #include "game/map.h"
 
@@ -52,6 +53,8 @@ void logicInit()
 	// init all game assets that we keep through the entire run time
 	loadFont(&FontSmall, "./data/gfx/fontSmall.bmp", 5, 9);
 	loadFont(&FontLarge, "./data/gfx/fontLarge.bmp", 10, 18);
+
+	menuLoadAll();
 
 	setGameState(STATE_MENU);
 }
@@ -125,4 +128,5 @@ void logic()
 void clean()
 {
 	cleanSDL();
+	menuDeleteAll();
 }

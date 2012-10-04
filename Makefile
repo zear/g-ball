@@ -118,6 +118,7 @@ SRC = 	src/int/intersect.c	\
 	src/font.c		\
 	src/input.c 		\
 	src/logic.c 		\
+	src/menu.c		\
 	src/SDLmain.c 		\
 	src/SDLgfx.c 		\
 	src/timer.c		\
