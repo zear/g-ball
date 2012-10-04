@@ -13,9 +13,7 @@ void drawMenu()
 	drawText("G-Ball", 130, 20, &FontLarge);
 	drawText("a g-sensor ball game", 110, 40, &FontSmall);
 
-	menuDraw(CurrentMenu, 0, 140, 100);
-	menuDraw(CurrentMenu, 1, 140, 110);
-	menuDraw(CurrentMenu, 2, 140, 120);
+	menuDraw(CurrentMenu, 140, 100);
 }
 
 void drawInGame()

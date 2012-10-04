@@ -72,9 +72,19 @@ void menuAction(MenuItem *Item)
 			setGameState(STATE_INGAME);
 			break;
 		case ACTION_OPTIONS:
+			CurrentMenu = MenuOptions;
+			SelectedItem = menuSwitchItem(CurrentMenu, 0);
 			break;
 		case ACTION_QUIT:
 			setGameState(STATE_EXIT);
+			break;
+		case ACTION_OPTIONS_VIDEO:
+			break;
+		case ACTION_OPTIONS_AUDIO:
+			break;
+		case ACTION_OPTIONS_BACK:
+			CurrentMenu = MenuMain;
+			SelectedItem = menuSwitchItem(CurrentMenu, 0);
 			break;
 
 		default:
@@ -111,6 +121,11 @@ void menuLoadAll()
 	MenuMain = menuCreateNew(MenuMain, 1, "Options", ACTION_OPTIONS);
 	MenuMain = menuCreateNew(MenuMain, 2, "Quit", ACTION_QUIT);
 
+	MenuOptions = menuCreateNew(MenuOptions, 0, "Video", ACTION_OPTIONS_VIDEO);
+	MenuOptions = menuCreateNew(MenuOptions, 1, "Audio", ACTION_OPTIONS_AUDIO);
+	MenuOptions = menuCreateNew(MenuOptions, 2, "", ACTION_NONE);
+	MenuOptions = menuCreateNew(MenuOptions, 3, "Back", ACTION_OPTIONS_BACK);
+
 	CurrentMenu = MenuMain;
 	SelectedItem = menuSwitchItem(CurrentMenu, 0);
 }
@@ -146,6 +161,24 @@ void menuInput()
 		NewItem = menuSwitchItem(CurrentMenu, newItemNumber);
 		if(NewItem != NULL)
 		{
+			while(NewItem->Action == ACTION_NONE)
+			{
+				if(NewItem->number < SelectedItem->number)
+				{
+					newItemNumber--;
+				}
+				else if(NewItem->number > SelectedItem->number)
+				{
+					newItemNumber++;
+				}
+				else
+				{
+					return;
+				}
+
+				NewItem = menuSwitchItem(CurrentMenu, newItemNumber);
+			}
+
 			SelectedItem = NewItem;
 		}
 	}
@@ -157,7 +190,7 @@ void menuInput()
 	}
 }
 
-void menuDraw(MenuContainer *Container, int number, int x, int y)
+void menuDrawSingle(MenuContainer *Container, int number, int x, int y)
 {
 	MenuItem *CurrentItem = Container->Menu;
 
@@ -182,5 +215,15 @@ void menuDraw(MenuContainer *Container, int number, int x, int y)
 		}
 
 		CurrentItem = CurrentItem->Next;
+	}
+}
+
+void menuDraw(MenuContainer *Container, int x, int y)
+{
+	int i;
+
+	for(i = 0; i < CurrentMenu->size; i++)
+	{
+		menuDrawSingle(CurrentMenu, i, 140, y + i * 10); 
 	}
 }

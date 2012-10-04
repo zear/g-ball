@@ -3,9 +3,13 @@
 
 typedef enum MenuActionEnum
 {
+	ACTION_NONE,
 	ACTION_NEW_GAME,
 	ACTION_OPTIONS,
-	ACTION_QUIT
+	ACTION_QUIT,
+	ACTION_OPTIONS_VIDEO,
+	ACTION_OPTIONS_AUDIO,
+	ACTION_OPTIONS_BACK
 } MenuAction;
 
 typedef struct MenuItemStruct
@@ -29,7 +33,8 @@ void menuDeleteSingle(MenuContainer *Container);
 void menuDeleteAll();
 void menuLoadAll();
 void menuInput();
-void menuDraw(MenuContainer *Container, int number, int x, int y);
+void menuDrawSingle(MenuContainer *Container, int number, int x, int y);
+void menuDraw(MenuContainer *Container, int x, int y);
 
 extern MenuContainer *CurrentMenu;
 extern MenuItem *SelectedItem;
