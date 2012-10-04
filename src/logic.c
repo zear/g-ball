@@ -63,6 +63,9 @@ void logicMenu()
 {
 	int leaving = 0;
 
+	menuInput();
+
+/*
 	if(keystate[SDLK_RETURN])
 	{
 		keystate[SDLK_RETURN] = 0;
@@ -73,6 +76,7 @@ void logicMenu()
 		keystate[SDLK_ESCAPE] = 0;
 		leaving = 1;
 	}
+*/
 
 	if(leaving)
 	{

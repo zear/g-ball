@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "font.h"
+#include "global.h"
+#include "input.h"
+#include "logic.h"
 
 MenuContainer *CurrentMenu = NULL;
 MenuItem *SelectedItem = NULL;
@@ -44,15 +47,34 @@ MenuContainer *menuCreateNew(MenuContainer *Container, int number, char *caption
 	return Container;
 }
 
+MenuItem *menuSwitchItem(MenuContainer *Container, int number)
+{
+	MenuItem *NewItem = Container->Menu;
+
+	while(NewItem != NULL)
+	{
+		if(NewItem->number == number)
+		{
+			return NewItem;
+		}
+
+		NewItem = NewItem->Next;
+	}
+
+	return NULL;
+}
+
 void menuAction(MenuItem *Item)
 {
 	switch(Item->Action)
 	{
 		case ACTION_NEW_GAME:
+			setGameState(STATE_INGAME);
 			break;
 		case ACTION_OPTIONS:
 			break;
 		case ACTION_QUIT:
+			setGameState(STATE_EXIT);
 			break;
 
 		default:
@@ -90,6 +112,49 @@ void menuLoadAll()
 	MenuMain = menuCreateNew(MenuMain, 2, "Quit", ACTION_QUIT);
 
 	CurrentMenu = MenuMain;
+	SelectedItem = menuSwitchItem(CurrentMenu, 0);
+}
+
+void menuInput()
+{
+	MenuItem *NewItem = NULL;
+	int newItemNumber = SelectedItem->number;
+
+	if(keystate[SDLK_UP])
+	{
+		keystate[SDLK_UP] = 0;
+		newItemNumber--;
+	}
+	else if(keystate[SDLK_DOWN])
+	{
+		keystate[SDLK_DOWN] = 0;
+		newItemNumber++;
+	}
+
+	if(newItemNumber < 0)
+	{
+		newItemNumber = CurrentMenu->size - 1;
+	}
+
+	if(newItemNumber >= CurrentMenu->size)
+	{
+		newItemNumber = 0;
+	}
+
+	if(newItemNumber != SelectedItem->number)
+	{
+		NewItem = menuSwitchItem(CurrentMenu, newItemNumber);
+		if(NewItem != NULL)
+		{
+			SelectedItem = NewItem;
+		}
+	}
+
+	if(keystate[SDLK_RETURN])
+	{
+		keystate[SDLK_RETURN] = 0;
+		menuAction(SelectedItem);
+	}
 }
 
 void menuDraw(MenuContainer *Container, int number, int x, int y)
@@ -107,6 +172,12 @@ void menuDraw(MenuContainer *Container, int number, int x, int y)
 		if(CurrentItem->number == number)
 		{
 			drawText(CurrentItem->caption, x, y, &FontSmall);
+
+			if(CurrentItem == SelectedItem)
+			{
+				drawText(">", 100, y, &FontSmall);
+				drawText("<", SCREEN_WIDTH - 100, y, &FontSmall);
+			}
 			break;
 		}
 

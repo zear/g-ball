@@ -23,10 +23,12 @@ typedef struct MenuContainerStruct
 } MenuContainer;
 
 MenuContainer *menuCreateNew(MenuContainer *Container, int number, char *caption, MenuAction Action);
+MenuItem *menuSwitchItem(MenuContainer *Container, int number);
 void menuAction(MenuItem *Item);
 void menuDeleteSingle(MenuContainer *Container);
 void menuDeleteAll();
 void menuLoadAll();
+void menuInput();
 void menuDraw(MenuContainer *Container, int number, int x, int y);
 
 extern MenuContainer *CurrentMenu;
