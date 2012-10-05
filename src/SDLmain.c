@@ -1,6 +1,7 @@
 #include "SDLmain.h"
 #include <SDL.h>
 #include "global.h"
+#include "game/logo.h"
 
 SDL_Surface *screen = NULL;
 SDL_Joystick *joy;
@@ -25,5 +26,6 @@ int initSDL()
 
 void cleanSDL()
 {
+	SDL_FreeSurface(Logo.bitmap);
 	SDL_Quit();
 }

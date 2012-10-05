@@ -7,4 +7,10 @@
 
 #define FPS		(1000/FPS_MACRO)
 
+typedef struct PointStruct
+{
+	int x;
+	int y;
+} Point;
+
 #endif /* _GLOBAL_H_ */

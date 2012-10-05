@@ -122,6 +122,7 @@ SRC = 	src/int/intersect.c	\
 	src/SDLmain.c 		\
 	src/SDLgfx.c 		\
 	src/timer.c		\
+	src/game/logo.c		\
 	src/game/entplayer.c
 OBJ = $(SRC:.c=.o)
 EXE = ball.bin

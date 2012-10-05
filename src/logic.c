@@ -5,6 +5,7 @@
 #include "input.h"
 #include "menu.h"
 #include "SDLmain.h"
+#include "game/logo.h"
 #include "game/map.h"
 
 enum GameStateType GameState = STATE_INIT;
@@ -63,6 +64,7 @@ void logicMenu()
 {
 	int leaving = 0;
 
+	logoLogic();
 	menuInput();
 
 /*

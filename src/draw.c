@@ -6,14 +6,16 @@
 #include "menu.h"
 #include "SDLgfx.h"
 #include "SDLmain.h"
+#include "game/logo.h"
 
 void drawMenu()
 {
 	drawBackground(8, 56, 8);
-	drawText("G-Ball", 130, 20, &FontLarge);
-	drawText("a g-sensor ball game", 110, 40, &FontSmall);
+	//drawText("G-Ball", 130, 20, &FontLarge);
+	//drawText("a g-sensor ball game", 110, 40, &FontSmall);
+	logoDraw();
 
-	menuDraw(CurrentMenu, 140, 100);
+	menuDraw(CurrentMenu, 150, 100);
 }
 
 void drawInGame()
