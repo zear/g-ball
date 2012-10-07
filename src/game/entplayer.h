@@ -12,7 +12,8 @@ typedef struct {
 	int collisionType;
 	
 	float x,y; // >> 16 .. Our x/y positions in fp16,16.
-	float sx, sy, ax, ay;
+	int forces;
+	float sx, sy, ax, ay, f[32];
 	
 	float mass;
 	float elasticity;

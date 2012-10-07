@@ -9,42 +9,13 @@
 #include "../int/intersect.h"
 #include "../int/physics.h"
 
-typedef struct {
-	int x[2];
-	int y[2];
-	void *next;
-} vert;
-
-void drawAdjacents(Player *this){
-	int i_, j_;
-	i_ = this->x / TILE_SIZE;
-	j_ = this->y / TILE_SIZE;
-	
-	drawAdjacent(i_, j_);
-	drawAdjacent(i_, j_-1);
-	drawAdjacent(i_+1, j_);
-	drawAdjacent(i_, j_+1);
-	drawAdjacent(i_-1, j_);
-}
-
-void drawAdjacent(int i, int j)
+void drawAdjacents(Player *this)
 {
-	int i_, j_, a[4];
-	i_ = i;
-	j_ = j;
-	getAdjacent(i_, j_, a);
-	
-	if (a[0])
-		lineRGBA(screen, i_*TILE_SIZE, j_*TILE_SIZE, (i_*TILE_SIZE) + TILE_SIZE, j_*TILE_SIZE, 255, 255, 255, 255);
-	
-	if (a[1])
-		lineRGBA(screen, (i_*TILE_SIZE) + TILE_SIZE, j_*TILE_SIZE, (i_*TILE_SIZE) + TILE_SIZE, (j_*TILE_SIZE) + TILE_SIZE, 255, 255, 255, 255);
-	
-	if (a[2])
-		lineRGBA(screen, i_*TILE_SIZE, (j_*TILE_SIZE) + TILE_SIZE, (i_*TILE_SIZE) + TILE_SIZE, (j_*TILE_SIZE) + TILE_SIZE, 255, 255, 255, 255);
-	
-	if (a[3])
-		lineRGBA(screen, i_*TILE_SIZE, j_*TILE_SIZE, i_*TILE_SIZE, (j_*TILE_SIZE) + TILE_SIZE, 255, 255, 255, 255);
+	Vertices firstEdge;
+	int i, j, adj[4], adjs[4][4];
+	i = this->x / TILE_SIZE;
+	j = this->y / TILE_SIZE;
+	getAdjacents(i,j, adj);
 }
 
 void playerEnt_draw(Player *this){
@@ -63,32 +34,30 @@ void playerEnt_logic(Player *this){
 	//this->x++; //Supress warnings.
 	/*this->x += SDL_JoystickGetAxis(joy, 0);
 	this->y += SDL_JoystickGetAxis(joy, 1);*/
+	this->forces = 1;
 	int fx, fy;
-	fx = (keystate[SDLK_LEFT]) ? -1 : (keystate[SDLK_RIGHT] ? 1 : 0);
-	fy = (keystate[SDLK_UP]) ? -1 : (keystate[SDLK_DOWN] ? 1 : 0);
-
-	this->ax = (fx*8) / this->mass;
-	this->ay = (fy*8) / this->mass;
+	fx = (keystate[SDLK_LEFT]) ? -5 : (keystate[SDLK_RIGHT] ? 5 : 0);
+	fy = (keystate[SDLK_UP]) ? -5 : (keystate[SDLK_DOWN] ? 5 : 0);
 	
-	this->sx += this->ax * frameScale;
-	this->sy += this->ay * frameScale;
+	this->f[0] = fx - (this->sx / this->mass) * 0.1;
+	this->f[1] = fy - (this->sy / this->mass) * 0.1;
 	
-	this->sx -= (this->sx * 0.3) * frameScale;
-	this->sy -= (this->sy * 0.3) * frameScale;
-	
-	/*float fix[4];
-	
-	int col = circleLineIntersect(0.f, 100.f, 100.f, 100.f, this->x, this->y, 6.f, &fix);
-	
-	if (col == 2) {
-		applyForceTwoPoints(this, &fix);
-	}*/
+	int i;
+	for (i=0;i<this->forces;i++){
+		this->ax += this->f[i*2];
+		this->ay += this->f[(i*2)+1];
+	}
 	
 	playerCollision(this);
 	
-	this->x  += this->sx;
-	this->y  += this->sy;
-
+	this->ax /= this->mass;
+	this->ay /= this->mass;
+	
+	this->x += (this->sx + this->ax * frameScale) * frameScale;
+	this->y += (this->sy + this->ay * frameScale) * frameScale;
+	
+	this->sx += this->ax;
+	this->sy += this->ay;
 }
 
 Entity *playerEnt_super(char *args) {
