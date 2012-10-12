@@ -36,25 +36,31 @@ void playerEnt_logic(Player *this){
 	this->y += SDL_JoystickGetAxis(joy, 1);*/
 	this->forces = 1;
 	int fx, fy;
-	fx = (keystate[SDLK_LEFT]) ? -5 : (keystate[SDLK_RIGHT] ? 5 : 0);
-	fy = (keystate[SDLK_UP]) ? -5 : (keystate[SDLK_DOWN] ? 5 : 0);
+	fx = (keystate[SDLK_LEFT]) ? -1 : (keystate[SDLK_RIGHT] ? 1 : 0);
+	fy = (keystate[SDLK_UP]) ? -1 : (keystate[SDLK_DOWN] ? 1 : 0);
 	
-	this->f[0] = fx - (this->sx / this->mass) * 0.1;
-	this->f[1] = fy - (this->sy / this->mass) * 0.1;
+	this->f[0] = fx - ((this->sx / this->mass) * 0.01);
+	this->f[1] = fy - ((this->sy / this->mass) * 0.01);
 	
+	playerEnt_doForces(this, 0);
+	
+	playerCollision(this);
+	
+	playerEnt_doForces(this, 1);
+	
+	this->x += (this->sx + (this->ax * frameScale)) * frameScale;
+	this->y += (this->sy + (this->ay * frameScale)) * frameScale;
+}
+
+void playerEnt_doForces(Player *this, int index){
 	int i;
-	for (i=0;i<this->forces;i++){
+	for (i=index;i<this->forces;i++){
 		this->ax += this->f[i*2];
 		this->ay += this->f[(i*2)+1];
 	}
 	
-	playerCollision(this);
-	
 	this->ax /= this->mass;
 	this->ay /= this->mass;
-	
-	this->x += (this->sx + this->ax * frameScale) * frameScale;
-	this->y += (this->sy + this->ay * frameScale) * frameScale;
 	
 	this->sx += this->ax;
 	this->sy += this->ay;
@@ -77,9 +83,9 @@ Entity *playerEnt_super(char *args) {
 	this->sx = 0.f;
 	this->sy = 0.f;
 	
-	this->elasticity = 1;
+	this->elasticity = 0;
 	
-	this->mass = 5.f; //5kg mass
+	this->mass = 1.2f; //5kg mass
 	
 	this->collisionType = 1;
 	

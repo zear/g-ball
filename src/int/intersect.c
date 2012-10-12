@@ -61,11 +61,7 @@ int circleLineIntersect(float x1, float y1, float x2, float y2, float cx, float 
 			return 1;
 		}
 		
-		//TODO: Check if point is inside line, in order not to have anything outside our segment.
-		
-		
 		return (delta == 0) ? 1 : 2;
-		// Figure out which point is closer to the circle
 	}
 }
 
