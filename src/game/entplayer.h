@@ -22,6 +22,7 @@ typedef struct {
 void playerEnt_draw(Player *this);
 void playerEnt_logic(Player *this);
 Entity *playerEnt_super(char *args);
+void playerEnt_doForces(Player *this, int index);
 
 #endif //__ENTITY_PLAYER__ 
 
